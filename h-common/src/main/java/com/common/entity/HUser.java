@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @description: TODO
+ * @description: 用户信息
  * @author: huangW
  * @createDate: 2020/3/16 20:42
  * @version: 1.0
@@ -21,10 +21,16 @@ public class HUser implements Serializable {
 
     @Id
     private String id;
+
     private String mobile;
+
     private String username;
+
     private String password;
+
     private String role;
+
     private Integer enableState;
+
     private Date createTime;
 }

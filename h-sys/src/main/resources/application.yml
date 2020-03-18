@@ -34,4 +34,6 @@ ribbon:
   ConnectTimeout: 5000  #请求连接的超时时间
   ReadTimeout: 6000 #请求处理的超时时间
 mybatis:
-  mapper-locations: classpath*:com.sys.mapper/*Mapper.xml #mybatis中sql的映射文件地址
+  mapper-locations: classpath*:mapper/*Mapper.xml #mybatis中sql的映射文件地址
+pagehelper:
+  helper-dialect: mysql

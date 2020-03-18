@@ -1,12 +1,17 @@
 package com.sys;
 
+import com.common.entity.HLandlord;
 import com.common.entity.HUser;
+
+import com.github.pagehelper.Page;
 import com.sys.dao.HUserRepository;
+import com.sys.mapper.HLandlordMapper;
 import com.sys.mapper.HUserMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
 import org.springframework.test.context.junit4.SpringRunner;
 
 
@@ -27,6 +32,9 @@ public class MyTest {
     @Autowired
     HUserMapper hUserMapper;
 
+    @Autowired
+    HLandlordMapper hLandlordMapper;
+
     @Test
     public void test(){
 //        List<HUser> all = hUserRepository.findAll();
@@ -36,8 +44,8 @@ public class MyTest {
 //        hUser.setMobile("123");
 //        hUserMapper.insert(hUser);
 //        System.out.println("111");
-        HUser hUser = hUserMapper.selectByPrimaryKey("1");
-        System.out.println(hUser);
+        Page<HLandlord> hLandlordList = hLandlordMapper.findHLandlordList();
+        System.out.println(hLandlordList);
 
 
     }
