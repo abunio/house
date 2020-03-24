@@ -19,6 +19,8 @@ import java.io.PrintWriter;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+
     /**
      * 登录处理
      * @param http
