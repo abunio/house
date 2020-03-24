@@ -1,11 +1,7 @@
 package com.sys;
 
-import com.common.entity.HLandlord;
-import com.common.entity.HUser;
-
 import com.github.pagehelper.Page;
 import com.sys.dao.HUserRepository;
-import com.sys.mapper.HLandlordMapper;
 import com.sys.mapper.HUserMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,11 +25,6 @@ public class MyTest {
     @Autowired
     HUserRepository hUserRepository;
 
-    @Autowired
-    HUserMapper hUserMapper;
-
-    @Autowired
-    HLandlordMapper hLandlordMapper;
 
     @Test
     public void test(){
@@ -44,8 +35,7 @@ public class MyTest {
 //        hUser.setMobile("123");
 //        hUserMapper.insert(hUser);
 //        System.out.println("111");
-        Page<HLandlord> hLandlordList = hLandlordMapper.findHLandlordList();
-        System.out.println(hLandlordList);
+
 
 
     }

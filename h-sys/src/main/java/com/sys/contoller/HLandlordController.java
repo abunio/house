@@ -1,6 +1,7 @@
 package com.sys.contoller;
 
 import com.common.entity.HLandlord;
+import com.common.model.request.QueryPageBean;
 import com.common.model.response.PageResult;
 import com.common.model.response.Result;
 import com.sys.service.HLandlordService;
@@ -23,23 +24,42 @@ public class HLandlordController {
 
     /**
      * 分页
-     * @param page
-     * @param size
+     * @param queryPageBean
      * @return
      */
-    @GetMapping("/list/{page}/{size}")
-    public PageResult findPage(@PathVariable("page") int page, @PathVariable("size")int size){
-        return hLandlordService.findPage(page,size);
+    @PostMapping("/list")
+    public PageResult findPage(@RequestBody(required=false) QueryPageBean queryPageBean){
+        return hLandlordService.findPage(queryPageBean);
     }
 
     /**
-     * 保存
+     * 新增和编辑
      * @param hLandlord
      * @return
      */
     @PostMapping("/add")
     public Result add(@RequestBody HLandlord hLandlord ){
-        hLandlordService.add(hLandlord);
-        return new Result(true,"保存成功");
+        String msg = hLandlordService.add(hLandlord);
+        return new Result(true,msg);
+    }
+
+    /**
+     * 根据id查询
+     * @param id
+     * @return
+     */
+    @GetMapping("findById")
+    public Result findById(@RequestParam("id") String id){
+        return new Result(true,"查询成功",hLandlordService.findById(id));
+    }
+
+    /**
+     * 删除
+     * @param id
+     * @return
+     */
+    @DeleteMapping("delete")
+    public Result delete(@RequestParam("id") String id){
+        return new Result(true,hLandlordService.delete(id));
     }
 }

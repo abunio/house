@@ -1,16 +1,20 @@
 package com.sys.service;
 
 import com.common.entity.HLandlord;
+import com.common.model.request.QueryPageBean;
 import com.common.model.response.PageResult;
-import com.common.utils.StringUtils;
+import com.common.utils.StringUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.sys.dao.HLandlordRepository;
 import com.sys.mapper.HLandlordMapper;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 
 /**
  * @Description
@@ -24,29 +28,66 @@ public class HLandlordService {
     @Autowired
     private HLandlordMapper hLandlordMapper;
 
-    @Autowired
-    private HLandlordRepository hLandlordRepository;
 
     /**
      * 分页
-     * @param page
-     * @param size
+     *
+     * @param queryPageBean
      * @return
      */
-    public PageResult findPage(int page, int size) {
-        PageHelper.startPage(page,size);
-        Page<HLandlord> hLandlordList = hLandlordMapper.findHLandlordList();
-        return new PageResult(hLandlordList.getTotal(),hLandlordList.getResult());
+    public PageResult findPage(QueryPageBean queryPageBean) {
+        PageHelper.startPage(queryPageBean.getCurrentPage(), queryPageBean.getPageSize());
+        Map map = new HashMap();
+        map.put("value",queryPageBean.getQueryString());
+        map.put("status",queryPageBean.getStatus());
+        Page<HLandlord> hLandlordList = hLandlordMapper.findHLandlordList(map);
+        return new PageResult(hLandlordList.getTotal(), hLandlordList.getResult());
     }
 
     /**
-     * 保存
+     * 新增和编辑
+     *
      * @param hLandlord
      * @return
      */
-    public void add(HLandlord hLandlord) {
-        hLandlord.setId(StringUtils.uuid());
-        hLandlord.setDel(0);
-        hLandlordRepository.save(hLandlord);
+    public String add(HLandlord hLandlord) {
+        if (StringUtils.isBlank(hLandlord.getId())) {
+            hLandlord.setId(StringUtil.uuid());
+            hLandlord.setDel(0);
+            hLandlord.setModifiedDate(new Date());
+            hLandlordMapper.insertSelective(hLandlord);
+            return "新增成功";
+        } else {
+            hLandlord.setModifiedDate(new Date());
+            hLandlordMapper.updateByPrimaryKeySelective(hLandlord);
+            return "编辑成功";
+        }
+    }
+
+    /**
+     * 根据id查询
+     *
+     * @param id
+     * @return
+     */
+    public HLandlord findById(String id) {
+        HLandlord hLandlord = hLandlordMapper.selectByPrimaryKey(id);
+        if (hLandlord == null) {
+           throw new RuntimeException("HLandlord查询为空");
+        }
+        return hLandlord;
+    }
+
+    /**
+     * 删除
+     *
+     * @param id
+     * @return
+     */
+    public String delete(String id) {
+        int i = hLandlordMapper.deleteByPrimaryKey(id);
+        if (i > 0)
+            return "删除成功";
+        return "请重试";
     }
 }

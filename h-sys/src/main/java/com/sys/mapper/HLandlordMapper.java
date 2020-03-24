@@ -4,6 +4,8 @@ import com.common.entity.HLandlord;
 import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.Map;
+
 @Mapper
 public interface HLandlordMapper {
 
@@ -19,5 +21,5 @@ public interface HLandlordMapper {
 
     int updateByPrimaryKey(HLandlord record);
 
-    Page<HLandlord> findHLandlordList();
+    Page<HLandlord> findHLandlordList(Map map);
 }

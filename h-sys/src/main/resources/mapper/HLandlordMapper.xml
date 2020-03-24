@@ -6,12 +6,13 @@
     <result column="landlord" property="landlord" jdbcType="VARCHAR" />
     <result column="phone" property="phone" jdbcType="VARCHAR" />
     <result column="address" property="address" jdbcType="VARCHAR" />
-    <result column="community_name" property="community" jdbcType="VARCHAR" />
-    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="community" property="community" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="CHAR" />
     <result column="del" property="del" jdbcType="INTEGER" />
+    <result column="modifiedDate" property="modifiedDate" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, landlord, phone, address, community, status, del
+    id, landlord, phone, address, community, status, del, modifiedDate
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -26,10 +27,10 @@
   <insert id="insert" parameterType="com.common.entity.HLandlord" >
     insert into h_landlord (id, landlord, phone, 
       address, community, status,
-      del)
+      del,modifiedDate)
     values (#{id,jdbcType=VARCHAR}, #{landlord,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
-      #{address,jdbcType=VARCHAR}, #{community,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER},
-      #{del,jdbcType=INTEGER})
+      #{address,jdbcType=VARCHAR}, #{community,jdbcType=VARCHAR}, #{status,jdbcType=CHAR},
+      #{del,jdbcType=INTEGER}, #{modifiedDate,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.common.entity.HLandlord" >
     insert into h_landlord
@@ -55,6 +56,9 @@
       <if test="del != null" >
         del,
       </if>
+      <if test="modifiedDate != null" >
+        modifiedDate,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -73,10 +77,13 @@
         #{community,jdbcType=VARCHAR},
       </if>
       <if test="status != null" >
-        #{status,jdbcType=INTEGER},
+        #{status,jdbcType=CHAR},
       </if>
       <if test="del != null" >
-        #{del,jdbcType=INTEGER},
+        #{del,jdbcType=BIT},
+      </if>
+      <if test="modifiedDate != null" >
+        #{modifiedDate,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -96,10 +103,13 @@
         community = #{community,jdbcType=VARCHAR},
       </if>
       <if test="status != null" >
-        status = #{status,jdbcType=INTEGER},
+        status = #{status,jdbcType=CHAR},
       </if>
       <if test="del != null" >
         del = #{del,jdbcType=INTEGER},
+      </if>
+      <if test="modifiedDate != null" >
+        modifiedDate = #{modifiedDate,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
@@ -110,13 +120,32 @@
       phone = #{phone,jdbcType=VARCHAR},
       address = #{address,jdbcType=VARCHAR},
       community = #{community,jdbcType=VARCHAR},
-      status = #{status,jdbcType=INTEGER},
-      del = #{del,jdbcType=INTEGER}
+      status = #{status,jdbcType=CHAR},
+      del = #{del,jdbcType=INTEGER},
+      modifiedDate = #{modifiedDate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <select id="findHLandlordList" resultType="com.common.entity.HLandlord">
+
+
+  <select id="findHLandlordList" resultType="com.common.entity.HLandlord" parameterType="java.util.Map">
     select
-    id, landlord, phone, address, community, status, del
+      id,
+      landlord,
+      phone,
+      address,
+      community,
+      status,
+      del,
+      modifiedDate
     from h_landlord
+    where del = 0
+    <if test="value != null and value != '' ">
+       and ( phone like "%"#{value}"%" or community like "%"#{value}"%"
+      or landlord like "%"#{value}"%" )
+    </if>
+    <if test="status != null and status != '' ">
+      and status = #{status}
+    </if>
+    order by modifiedDate desc
   </select>
 </mapper>
