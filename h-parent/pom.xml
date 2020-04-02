@@ -19,6 +19,8 @@
         <module>../h-sys</module>
         <module>../h-common</module>
         <module>../h-eureka</module>
+        <module>../h-estate</module>
+        <module>../h-gateway</module>
     </modules>
 
     <properties>

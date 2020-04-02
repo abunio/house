@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.house.sys.mapper.HLandlordMapper" >
+<mapper namespace="com.house.estate.mapper.HLandlordMapper" >
   <resultMap id="BaseResultMap" type="com.house.common.entity.HLandlord" >
     <id column="id" property="id" jdbcType="VARCHAR" />
     <result column="landlord" property="landlord" jdbcType="VARCHAR" />
