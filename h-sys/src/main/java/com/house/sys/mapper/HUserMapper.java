@@ -1,6 +1,6 @@
 package com.house.sys.mapper;
 
-import com.house.common.entity.HUser;
+import com.house.common.entity.sys.HUser;
 import org.apache.ibatis.annotations.Mapper;
 
 

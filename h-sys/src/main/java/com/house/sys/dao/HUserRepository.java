@@ -1,6 +1,6 @@
 package com.house.sys.dao;
 
-import com.house.common.entity.HUser;
+import com.house.common.entity.sys.HUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

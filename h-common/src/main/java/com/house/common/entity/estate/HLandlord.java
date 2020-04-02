@@ -1,4 +1,4 @@
-package com.house.common.entity;
+package com.house.common.entity.estate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;

@@ -1,6 +1,6 @@
 package com.house.sys.contoller;
 
-import com.house.common.entity.HLandlord;
+import com.house.common.entity.estate.HLandlord;
 import com.house.common.model.request.QueryPageBean;
 import com.house.common.model.response.PageResult;
 import com.house.common.model.response.Result;

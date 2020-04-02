@@ -1,4 +1,4 @@
-package com.house.common.entity;
+package com.house.common.entity.sys;
 
 import lombok.Data;
 

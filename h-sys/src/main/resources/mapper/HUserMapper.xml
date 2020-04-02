@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.house.sys.mapper.HUserMapper">
-  <resultMap id="BaseResultMap" type="com.house.common.entity.HUser" >
+  <resultMap id="BaseResultMap" type="com.house.common.entity.sys.HUser" >
     <id column="id" property="id" jdbcType="VARCHAR" />
     <result column="mobile" property="mobile" jdbcType="VARCHAR" />
     <result column="username" property="username" jdbcType="VARCHAR" />
@@ -23,7 +23,7 @@
     delete from h_user
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.house.common.entity.HUser" >
+  <insert id="insert" parameterType="com.house.common.entity.sys.HUser" >
     insert into h_user (id, mobile, username, 
       password, role, enableState,
       createTime)
@@ -31,7 +31,7 @@
       #{password,jdbcType=VARCHAR}, #{role,jdbcType=VARCHAR}, #{enableState,jdbcType=INTEGER}, 
       #{createTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.house.common.entity.HUser" >
+  <insert id="insertSelective" parameterType="com.house.common.entity.sys.HUser" >
     insert into h_user
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -80,7 +80,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.house.common.entity.HUser" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.house.common.entity.sys.HUser" >
     update h_user
     <set >
       <if test="mobile != null" >
@@ -104,7 +104,7 @@
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.house.common.entity.HUser" >
+  <update id="updateByPrimaryKey" parameterType="com.house.common.entity.sys.HUser" >
     update h_user
     set mobile = #{mobile,jdbcType=VARCHAR},
       username = #{username,jdbcType=VARCHAR},

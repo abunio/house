@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.house.estate.mapper.HLandlordMapper" >
-  <resultMap id="BaseResultMap" type="com.house.common.entity.HLandlord" >
+  <resultMap id="BaseResultMap" type="com.house.common.entity.estate.HLandlord" >
     <id column="id" property="id" jdbcType="VARCHAR" />
     <result column="landlord" property="landlord" jdbcType="VARCHAR" />
     <result column="phone" property="phone" jdbcType="VARCHAR" />
@@ -24,7 +24,7 @@
     delete from h_landlord
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.house.common.entity.HLandlord" >
+  <insert id="insert" parameterType="com.house.common.entity.estate.HLandlord" >
     insert into h_landlord (id, landlord, phone, 
       address, community, status,
       del,modifiedDate)
@@ -32,7 +32,7 @@
       #{address,jdbcType=VARCHAR}, #{community,jdbcType=VARCHAR}, #{status,jdbcType=CHAR},
       #{del,jdbcType=INTEGER}, #{modifiedDate,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.house.common.entity.HLandlord" >
+  <insert id="insertSelective" parameterType="com.house.common.entity.estate.HLandlord" >
     insert into h_landlord
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -87,7 +87,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.house.common.entity.HLandlord" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.house.common.entity.estate.HLandlord" >
     update h_landlord
     <set >
       <if test="landlord != null" >
@@ -114,7 +114,7 @@
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.house.common.entity.HLandlord" >
+  <update id="updateByPrimaryKey" parameterType="com.house.common.entity.estate.HLandlord" >
     update h_landlord
     set landlord = #{landlord,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
@@ -127,7 +127,7 @@
   </update>
 
 
-  <select id="findHLandlordList" resultType="com.house.common.entity.HLandlord" parameterType="java.util.Map">
+  <select id="findHLandlordList" resultType="com.house.common.entity.estate.HLandlord" parameterType="java.util.Map">
     select
       id,
       landlord,
