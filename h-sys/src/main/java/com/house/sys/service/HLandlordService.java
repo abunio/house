@@ -1,11 +1,11 @@
 package com.house.sys.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.house.common.entity.estate.HLandlord;
 import com.house.common.model.request.QueryPageBean;
 import com.house.common.model.response.PageResult;
 import com.house.common.utils.StringUtil;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 import com.house.sys.mapper.HLandlordMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,12 +36,13 @@ public class HLandlordService {
      * @return
      */
     public PageResult findPage(QueryPageBean queryPageBean) {
-        PageHelper.startPage(queryPageBean.getCurrentPage(), queryPageBean.getPageSize());
+        Page<HLandlord> page = new Page<>(queryPageBean.getCurrentPage(),queryPageBean.getPageSize());
         Map map = new HashMap();
         map.put("value",queryPageBean.getQueryString());
         map.put("status",queryPageBean.getStatus());
-        Page<HLandlord> hLandlordList = hLandlordMapper.findHLandlordList(map);
-        return new PageResult(hLandlordList.getTotal(), hLandlordList.getResult());
+        // String status = queryPageBean.getStatus();
+        IPage<HLandlord> pageHLandlord = hLandlordMapper.findHLandlordList(page,map);
+        return new PageResult(pageHLandlord.getTotal(), pageHLandlord.getRecords());
     }
 
     /**

@@ -9,10 +9,10 @@
     <result column="community" property="community" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="CHAR" />
     <result column="del" property="del" jdbcType="INTEGER" />
-    <result column="modifiedDate" property="modifiedDate" jdbcType="TIMESTAMP" />
+    <result column="modified_date" property="modifiedDate" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, landlord, phone, address, community, status, del, modifiedDate
+    id, landlord, phone, address, community, status, del, modified_date
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -27,7 +27,7 @@
   <insert id="insert" parameterType="com.house.common.entity.estate.HLandlord" >
     insert into h_landlord (id, landlord, phone, 
       address, community, status,
-      del,modifiedDate)
+      del,modified_date)
     values (#{id,jdbcType=VARCHAR}, #{landlord,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
       #{address,jdbcType=VARCHAR}, #{community,jdbcType=VARCHAR}, #{status,jdbcType=CHAR},
       #{del,jdbcType=INTEGER}, #{modifiedDate,jdbcType=TIMESTAMP})
@@ -57,7 +57,7 @@
         del,
       </if>
       <if test="modifiedDate != null" >
-        modifiedDate,
+        modified_date,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -109,7 +109,7 @@
         del = #{del,jdbcType=INTEGER},
       </if>
       <if test="modifiedDate != null" >
-        modifiedDate = #{modifiedDate,jdbcType=TIMESTAMP},
+        modified_date = #{modifiedDate,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
@@ -122,7 +122,7 @@
       community = #{community,jdbcType=VARCHAR},
       status = #{status,jdbcType=CHAR},
       del = #{del,jdbcType=INTEGER},
-      modifiedDate = #{modifiedDate,jdbcType=TIMESTAMP}
+      modified_date = #{modifiedDate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 
@@ -136,16 +136,16 @@
       community,
       status,
       del,
-      modifiedDate
+      modified_date
     from h_landlord
     where del = 0
-    <if test="value != null and value != '' ">
-       and ( phone like "%"#{value}"%" or community like "%"#{value}"%"
-      or landlord like "%"#{value}"%" )
+    <if test="map.value != null and map.value != '' ">
+      and ( phone like "%"#{map.value}"%" or community like "%"#{map.value}"%"
+      or landlord like "%"#{map.value}"%" )
     </if>
-    <if test="status != null and status != '' ">
-      and status = #{status}
+    <if test="map.status != null and map.status != '' ">
+      and status = #{map.status}
     </if>
-    order by modifiedDate desc
+    order by modified_date desc
   </select>
 </mapper>

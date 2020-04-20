@@ -1,13 +1,16 @@
 package com.house.estate.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.house.common.entity.estate.HLandlord;
-import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.Map;
 
-@Mapper
-public interface HLandlordMapper {
+
+public interface HLandlordMapper extends BaseMapper<HLandlord> {
 
     int deleteByPrimaryKey(String id);
 
@@ -21,5 +24,5 @@ public interface HLandlordMapper {
 
     int updateByPrimaryKey(HLandlord record);
 
-    Page<HLandlord> findHLandlordList(Map map);
+    IPage<HLandlord> findHLandlordList(Page<HLandlord> page,@Param("map") Map map);
 }

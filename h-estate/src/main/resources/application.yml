@@ -5,7 +5,7 @@ spring:
     name: h-estate
   datasource:
     druid:
-      url: jdbc:mysql://192.168.2.111:3306/house?characterEncoding=utf-8
+      url: jdbc:mysql://192.168.2.106:3306/house?characterEncoding=utf-8
       username: root
       password: 123456
       driverClassName: com.mysql.jdbc.Driver
@@ -34,7 +34,27 @@ ribbon:
   OkToRetryOnAllOperations: false  #对所有操作请求都进行重试，如果是get则可以，如果是post，put等操作没有实现幂等的情况下是很危险的,所以设置为false
   ConnectTimeout: 5000  #请求连接的超时时间
   ReadTimeout: 6000 #请求处理的超时时间
-mybatis:
-  mapper-locations: classpath*:mapper/*Mapper.xml #mybatis中sql的映射文件地址
+#mybatis:
+#  mapper-locations: classpath*:mapper/*Mapper.xml #mybatis中sql的映射文件地址
 pagehelper:
   helper-dialect: mysql
+
+mybatis-plus:
+  # xml扫描，多个目录用逗号或者分号分隔（告诉 Mapper 所对应的 XML 文件位置）
+  mapper-locations: classpath:mapper/*Mapper.xml
+  # 以下配置均有默认值,可以不设置
+  global-config:
+    db-config:
+      #主键类型 AUTO:"数据库ID自增" INPUT:"用户输入ID",ID_WORKER:"全局唯一ID (数字类型唯一ID)", UUID:"全局唯一ID UUID";
+
+      #字段策略 IGNORED:"忽略判断"  NOT_NULL:"非 NULL 判断")  NOT_EMPTY:"非空判断"
+      field-strategy: NOT_EMPTY
+      #数据库类型
+      db-type: MYSQL
+  configuration:
+    # 是否开启自动驼峰命名规则映射:从数据库列名到Java属性驼峰命名的类似映射
+    map-underscore-to-camel-case: true
+    # 返回map时true:当查询数据为空时字段返回为null,false:不加这个查询数据为空时，字段将被隐藏
+    call-setters-on-nulls: true
+    # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

@@ -4,6 +4,7 @@ import com.house.common.entity.estate.HLandlord;
 import com.house.common.model.request.QueryPageBean;
 import com.house.common.model.response.PageResult;
 import com.house.common.model.response.Result;
+import com.house.estate.mapper.HLandlordMapper;
 import com.house.estate.service.HLandlordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,7 @@ public class HLandlordController {
 
     @Autowired
     private HLandlordService hLandlordService;
+
 
     /**
      * 分页

@@ -1,8 +1,9 @@
 package com.house.sys.mapper;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.house.common.entity.estate.HLandlord;
-import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.Map;
 
@@ -21,5 +22,5 @@ public interface HLandlordMapper {
 
     int updateByPrimaryKey(HLandlord record);
 
-    Page<HLandlord> findHLandlordList(Map map);
+    Page<HLandlord> findHLandlordList(Page<HLandlord> page, @Param("map") Map map);
 }

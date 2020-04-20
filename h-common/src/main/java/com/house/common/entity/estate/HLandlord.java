@@ -1,12 +1,12 @@
 package com.house.common.entity.estate;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -19,9 +19,10 @@ import java.util.Date;
 //@Entity
 //@Table(name = "h_landlord")
 @Data
+@TableName("h_landlord")
 public class HLandlord implements Serializable {
 
-    @Id
+    @TableId(type = IdType.INPUT)
     private String id;
 
     private String landlord;
