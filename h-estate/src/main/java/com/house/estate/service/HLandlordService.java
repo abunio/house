@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
@@ -47,9 +46,9 @@ public class HLandlordService  {
         Map map = new HashMap();
         map.put("value",queryPageBean.getQueryString());
         map.put("status",queryPageBean.getStatus());
-       // String status = queryPageBean.getStatus();
         IPage<HLandlord> pageHLandlord = hLandlordMapper.findHLandlordList(page,map);
         return new PageResult(pageHLandlord.getTotal(), pageHLandlord.getRecords());
+
 //        Page<HLandlord> page = new Page(queryPageBean.getCurrentPage(),queryPageBean.getPageSize());
 //        QueryWrapper<HLandlord> queryWrapper = new QueryWrapper();
 //        if(StringUtils.isNotBlank(queryPageBean.getQueryString())){
@@ -60,10 +59,11 @@ public class HLandlordService  {
 //        if(StringUtils.isNotBlank(queryPageBean.getStatus())){
 //            queryWrapper.eq("status",queryPageBean.getStatus());
 //        }
+//        queryWrapper.eq("del",0);
 //        queryWrapper.orderByDesc("modified_date");
-//        IPage<HLandlord> pages = hLandlordMapper.selectPage(page, queryWrapper);
+//        hLandlordMapper.selectPage(page, queryWrapper);
 //        if(page!=null){
-//            return new PageResult(pages.getTotal(), pages.getRecords());
+//            return new PageResult(page.getTotal(), page.getRecords());
 //        }
 //        return null;
     }

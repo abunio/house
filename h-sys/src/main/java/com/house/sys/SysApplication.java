@@ -15,7 +15,7 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
  */
 @MapperScan("com.house.sys.mapper")
 @EntityScan("com.house.common.entity")
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages="com.house")
 @EnableEurekaClient
 public class SysApplication {
     public static void main(String[] args) {

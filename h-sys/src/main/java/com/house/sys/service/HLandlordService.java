@@ -40,7 +40,6 @@ public class HLandlordService {
         Map map = new HashMap();
         map.put("value",queryPageBean.getQueryString());
         map.put("status",queryPageBean.getStatus());
-        // String status = queryPageBean.getStatus();
         IPage<HLandlord> pageHLandlord = hLandlordMapper.findHLandlordList(page,map);
         return new PageResult(pageHLandlord.getTotal(), pageHLandlord.getRecords());
     }

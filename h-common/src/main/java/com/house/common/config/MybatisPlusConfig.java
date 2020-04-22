@@ -1,4 +1,4 @@
-package com.house.common.Config;
+package com.house.common.config;
 
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import org.springframework.context.annotation.Bean;

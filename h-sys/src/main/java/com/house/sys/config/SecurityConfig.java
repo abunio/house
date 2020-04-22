@@ -1,5 +1,6 @@
 //package com.house.sys.config;
 //
+//import com.alibaba.fastjson.JSON;
 //import com.house.common.model.response.Result;
 //import com.fasterxml.jackson.databind.ObjectMapper;
 //import org.springframework.context.annotation.Configuration;
@@ -34,7 +35,7 @@
 //                //.antMatchers("/index").hasRole("ADMIN")
 //                // 允许匿名的url - 可理解为放行接口 - 多个接口使用,分割
 //                //.antMatchers("/", "/home").permitAll()
-//                .antMatchers("/landlord/**").permitAll()
+//                //.antMatchers("/landlord/**").permitAll()
 //                // 其余所有请求都需要认证
 //                .anyRequest().authenticated()
 //                .and()
@@ -49,16 +50,20 @@
 //                .successHandler((req, resp, authentication) -> {
 //                    User user = (User)authentication.getPrincipal();
 //                    resp.setContentType("application/json;charset=utf-8");
-//                    PrintWriter out = resp.getWriter();
-//                    Result date = new Result(true,"登录成功",user);
-//                    out.write(new ObjectMapper().writeValueAsString(date));
-//                    out.flush();
+////                    PrintWriter out = resp.getWriter();
+////                    Result data = new Result(true,"登录成功",user);
+////                    out.write(new ObjectMapper().writeValueAsString(data));
+////                    out.flush();
+//                    Result result = new Result(true,"登录成功",user);
+//                    resp.getWriter().write(JSON.toJSONString(result));
+//
 //                })
 //                // 配置登录失败的回调
 //                .failureHandler((req, resp, exception) -> {
 //                    resp.setContentType("application/json;charset=utf-8");
 //                    PrintWriter out = resp.getWriter();
-//                    out.write("登录失败...");
+//                    Result data = new Result(false,"登录失败");
+//                    out.write(new ObjectMapper().writeValueAsString(data));
 //                    out.flush();
 //                })
 //                .permitAll()//和表单登录相关的接口统统都直接通过
