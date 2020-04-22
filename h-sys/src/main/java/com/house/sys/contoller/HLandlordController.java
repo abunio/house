@@ -7,6 +7,10 @@ import com.house.common.model.response.Result;
 import com.house.sys.service.HLandlordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @Description
@@ -14,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
  * @Date 2020/3/17
  * @Version V1.0
  */
-@CrossOrigin
+
 @RestController
 @RequestMapping("/landlord")
 public class HLandlordController {
@@ -50,6 +54,8 @@ public class HLandlordController {
      */
     @GetMapping("findById")
     public Result findById(@RequestParam("id") String id){
+//        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+//        Object username = request.getAttribute("username");
         return new Result(true,"查询成功",hLandlordService.findById(id));
     }
 
