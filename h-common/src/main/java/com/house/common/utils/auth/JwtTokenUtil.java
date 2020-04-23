@@ -28,12 +28,13 @@ public class JwtTokenUtil {
     /**
      * 生成令牌
      *
-     * @param userDetails 用户
+     * @param authUser 用户
      * @return 令牌
      */
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(AuthUser authUser) {
         Map<String, Object> claims = new HashMap<>(2);
-        claims.put(Claims.SUBJECT, userDetails.getUsername());
+        claims.put(Claims.SUBJECT, authUser.getUsername());
+        claims.put(Claims.ISSUER, authUser.getUserNumber());
         claims.put(Claims.ISSUED_AT, new Date());
         return generateToken(claims);
     }
@@ -54,6 +55,23 @@ public class JwtTokenUtil {
             System.out.println("e = " + e.getMessage());
         }
         return username;
+    }
+
+    /**
+     * 从令牌中获取用户名编号
+     * @param token 令牌
+     * @return 户名编号
+     */
+    public String getUserNumberFromToken(String token) {
+        String userNumber = null;
+        try {
+            Claims claims = getClaimsFromToken(token);
+            System.out.println("claims = " + claims.toString());
+            userNumber = claims.getIssuer();
+        } catch (Exception e) {
+            System.out.println("e = " + e.getMessage());
+        }
+        return userNumber;
     }
 
     /**

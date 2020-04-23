@@ -1,10 +1,8 @@
-package com.house.sys.config;
+package com.house.common.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.house.common.entity.auth.AuthenticationBean;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -16,12 +14,12 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * @Description
+ * @Description 重写UsernamePasswordAuthenticationFilter过滤器 解析登录认证操作
  * @Author huangW
  * @Date 2020/4/22
  * @Version V1.0
  */
-public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+public class UserCenterFilter extends UsernamePasswordAuthenticationFilter {
 
 
     @Override

@@ -17,6 +17,18 @@ spring:
       testOnReturn: false #归还连接时检测连接是否有效
       timeBetweenEvictionRunsMillis: 60000 #配置间隔检测连接是否有效的时间（单位是毫秒）
       minEvictableIdleTimeMillis: 300000  #连接在连接池的最小生存时间（毫秒）
+  redis:
+    database: 1
+    host: 192.168.2.106
+    port: 6379
+    timeout: 3000
+    jedis:
+      pool:
+        max-idle: 500
+        min-idle: 50
+        max-active: 2000
+        max-wait: 1000
+    testOnBorrow: true
   security:
     user:
       name: admin
@@ -62,3 +74,4 @@ mybatis-plus:
     call-setters-on-nulls: true
     # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+

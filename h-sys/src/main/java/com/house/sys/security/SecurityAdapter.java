@@ -1,47 +1,52 @@
-package com.house.sys.config;
+package com.house.sys.security;
 
-import com.alibaba.fastjson.JSON;
 import com.house.common.filter.TokenRequestFilter;
-import com.house.common.model.response.Result;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.house.common.security.FailureHandler;
+import com.house.common.security.SuccessHandler;
+import com.house.common.security.UserCenterFilter;
+import com.house.common.utils.auth.PasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsUtils;
 
-import java.io.PrintWriter;
 
 /**
- * @Description
+ * @Description Security授权配置主文件
  * @Author huangW
  * @Date 2020/3/24
  * @Version V1.0
  */
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityAdapter extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private SuccessHandler successHandler;
 
     @Autowired
+    private FailureHandler failureHandler;
+
+    @Autowired
     private TokenRequestFilter tokenRequestFilter;
 
-//    @Bean
-//    @Override
-//    public AuthenticationManager authenticationManagerBean() throws Exception {
-//        return super.authenticationManagerBean();
-//    }
+    @Autowired
+    private UserServiceImpl userService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
 
-
+    @Autowired
+    public void configureAuthentication(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
+        authenticationManagerBuilder.userDetailsService(userService).passwordEncoder(passwordEncoder);
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -54,29 +59,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().headers().cacheControl();
 
         http.antMatcher("/**").authorizeRequests()
-            .antMatchers("/", "/login**").permitAll()
-            .anyRequest().authenticated();
-            //这里必须要写formLogin()，不然原有的UsernamePasswordAuthenticationFilter不会出现，也就无法配置我们重新的UsernamePasswordAuthenticationFilter
-            //.and().formLogin().loginPage("/");
+                .antMatchers("/", "/login").permitAll()
+                .antMatchers("/", "/register").permitAll()
+                .anyRequest().authenticated();
+        //这里必须要写formLogin()，不然原有的UsernamePasswordAuthenticationFilter不会出现，也就无法配置我们重新的UsernamePasswordAuthenticationFilter
+        //.and().formLogin().loginPage("/");
 
         //用重写的Filter替换掉原有的UsernamePasswordAuthenticationFilter
-        http.addFilterAt(customAuthenticationFilter(),
-                UsernamePasswordAuthenticationFilter.class);
+        http.addFilterAt(userCenterFilter(),UsernamePasswordAuthenticationFilter.class);
         //拦截token，并检测。在 UsernamePasswordAuthenticationFilter 之前添加 JwtAuthenticationTokenFilter
-        http.addFilterBefore(tokenRequestFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(tokenRequestFilter,UsernamePasswordAuthenticationFilter.class);
     }
 
     @Bean
-    CustomAuthenticationFilter customAuthenticationFilter() throws Exception {
-        CustomAuthenticationFilter filter = new CustomAuthenticationFilter();
+    UserCenterFilter userCenterFilter() throws Exception {
+        UserCenterFilter filter = new UserCenterFilter();
         filter.setAuthenticationSuccessHandler(successHandler);
-        //filter.setAuthenticationFailureHandler(new FailureHandler());
-        filter.setFilterProcessesUrl("/login/self");
+        filter.setAuthenticationFailureHandler(failureHandler);
+        filter.setFilterProcessesUrl("/login");
 
         //这句很关键，重用WebSecurityConfigurerAdapter配置的AuthenticationManager，不然要自己组装AuthenticationManager
         filter.setAuthenticationManager(authenticationManagerBean());
         return filter;
     }
-
 
 }

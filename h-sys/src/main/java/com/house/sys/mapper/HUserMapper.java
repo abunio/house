@@ -1,11 +1,11 @@
 package com.house.sys.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.house.common.entity.sys.HUser;
-import org.apache.ibatis.annotations.Mapper;
 
 
-@Mapper
-public interface HUserMapper {
+
+public interface HUserMapper extends BaseMapper<HUser> {
 
     int deleteByPrimaryKey(String id);
 
@@ -18,4 +18,8 @@ public interface HUserMapper {
     int updateByPrimaryKeySelective(HUser record);
 
     int updateByPrimaryKey(HUser record);
+
+    Integer selectCountByUserName(String username);
+
+    HUser selectByUserName(String username);
 }

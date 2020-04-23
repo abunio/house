@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.house.sys.mapper.HUserMapper">
+<mapper namespace="com.house.sys.mapper.HUserMapper" >
   <resultMap id="BaseResultMap" type="com.house.common.entity.sys.HUser" >
     <id column="id" property="id" jdbcType="VARCHAR" />
     <result column="mobile" property="mobile" jdbcType="VARCHAR" />
     <result column="username" property="username" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="user_number" property="userNumber" jdbcType="VARCHAR" />
     <result column="role" property="role" jdbcType="VARCHAR" />
-    <result column="enableState" property="enableState" jdbcType="INTEGER" />
-    <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="enable_state" property="enableState" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, mobile, username, password, role, enableState, createTime
+    id, mobile, username, password, user_number, role, enable_state, create_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from h_user
     where id = #{id,jdbcType=VARCHAR}
@@ -24,12 +25,12 @@
     where id = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.house.common.entity.sys.HUser" >
-    insert into h_user (id, mobile, username, 
-      password, role, enableState,
-      createTime)
-    values (#{id,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
-      #{password,jdbcType=VARCHAR}, #{role,jdbcType=VARCHAR}, #{enableState,jdbcType=INTEGER}, 
-      #{createTime,jdbcType=TIMESTAMP})
+    insert into h_user (id, mobile, username,
+      password, user_number, role,
+      enable_state, create_time)
+    values (#{id,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR},
+      #{password,jdbcType=VARCHAR}, #{userNumber,jdbcType=VARCHAR}, #{role,jdbcType=VARCHAR},
+      #{enableState,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.house.common.entity.sys.HUser" >
     insert into h_user
@@ -46,14 +47,17 @@
       <if test="password != null" >
         password,
       </if>
+      <if test="userNumber != null" >
+        user_number,
+      </if>
       <if test="role != null" >
         role,
       </if>
       <if test="enableState != null" >
-        enableState,
+        enable_state,
       </if>
       <if test="createTime != null" >
-        createTime,
+        create_time,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -68,6 +72,9 @@
       </if>
       <if test="password != null" >
         #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="userNumber != null" >
+        #{userNumber,jdbcType=VARCHAR},
       </if>
       <if test="role != null" >
         #{role,jdbcType=VARCHAR},
@@ -92,14 +99,17 @@
       <if test="password != null" >
         password = #{password,jdbcType=VARCHAR},
       </if>
+      <if test="userNumber != null" >
+        user_number = #{userNumber,jdbcType=VARCHAR},
+      </if>
       <if test="role != null" >
         role = #{role,jdbcType=VARCHAR},
       </if>
       <if test="enableState != null" >
-        enableState = #{enableState,jdbcType=INTEGER},
+        enable_state = #{enableState,jdbcType=INTEGER},
       </if>
       <if test="createTime != null" >
-        createTime = #{createTime,jdbcType=TIMESTAMP},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
@@ -109,9 +119,22 @@
     set mobile = #{mobile,jdbcType=VARCHAR},
       username = #{username,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
+      user_number = #{userNumber,jdbcType=VARCHAR},
       role = #{role,jdbcType=VARCHAR},
-      enableState = #{enableState,jdbcType=INTEGER},
-      createTime = #{createTime,jdbcType=TIMESTAMP}
+      enable_state = #{enableState,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  <select id="selectCountByUserName" resultType="java.lang.Integer" parameterType="java.lang.String" >
+    select
+      count(id)
+    from h_user
+    where username = #{username,jdbcType=VARCHAR} and enable_state = 0
+  </select>
+  <select id="selectByUserName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from h_user
+    where username = #{username,jdbcType=VARCHAR} and enable_state = 0
+  </select>
 </mapper>

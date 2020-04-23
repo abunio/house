@@ -29,7 +29,7 @@ import java.util.Map;
  * @Version V1.0
  */
 @Service
-public class HLandlordService  {
+public class HLandlordService {
 
     @Autowired
     private HLandlordMapper hLandlordMapper;

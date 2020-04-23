@@ -1,11 +1,8 @@
-package com.house.sys.config;
+package com.house.common.security;
 
-import com.alibaba.fastjson.JSON;
-import com.baomidou.mybatisplus.extension.api.R;
 import com.house.common.entity.auth.AuthUser;
 import com.house.common.model.response.CommonCode;
 import com.house.common.model.response.ResponseResult;
-import com.house.common.model.response.Result;
 import com.house.common.utils.auth.JwtTokenUtil;
 import com.house.common.utils.auth.TokenCache;
 import com.house.common.utils.auth.WriteToJson;
@@ -13,8 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
@@ -26,7 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @Description
+ * @Description 登录成功操作
  * @Author huangW
  * @Date 2020/4/22
  * @Version V1.0
@@ -40,28 +35,24 @@ public class SuccessHandler extends WriteToJson implements AuthenticationSuccess
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest req, HttpServletResponse resp, Authentication authentication) throws IOException, ServletException {
-//        User user = (User)authentication.getPrincipal();
-//        log.info("username ->" + user.getUsername());
-//        resp.setContentType("application/json;charset=utf-8");
-//        Result result = new Result(true,"登录成功",user);
-//        log.info("result ->" + JSON.toJSONString(result));
-//        resp.getWriter().write(JSON.toJSONString(result));
 
         //取得账号信息
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        AuthUser authUser = (AuthUser) authentication.getPrincipal();
+        log.info("userDetails -> " + authUser);
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String token = TokenCache.getTokenFromCache(userDetails.getUsername());
+        String token = TokenCache.getTokenFromCache(authUser.getUsername());
         if(token ==null) {
-            System.out.println("初次登录，token还没有，生成新token。。。。。。");
+            log.info("初次登录，token还没有，生成新token。。。。。。");
             //如果token为空，则去创建一个新的token
-            //jwtTokenUtil = new JwtTokenUtil();
-            token = jwtTokenUtil.generateToken(userDetails);
+            token = jwtTokenUtil.generateToken(authUser);
             //把新的token存储到缓存中
-            TokenCache.setToken(userDetails.getUsername(),token);
+            TokenCache.setToken(authUser.getUsername(),token);
         }
 
+        log.info("token -> " + token);
         Map<String,Object> map = new HashMap<>();
-        map.put("username",userDetails.getUsername());
+        map.put("userName",authUser.getUsername());
+        map.put("userNumber",authUser.getUserNumber());
         map.put("token",token);
 
         ResponseResult data = new ResponseResult(CommonCode.LOGIN,map);
@@ -69,4 +60,5 @@ public class SuccessHandler extends WriteToJson implements AuthenticationSuccess
         this.WriteJSON(req, resp, data);
 
     }
+
 }

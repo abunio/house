@@ -2,6 +2,7 @@ package com.house.common.filter;
 
 import com.house.common.entity.auth.AuthUser;
 import com.house.common.utils.auth.JwtTokenUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,18 +18,22 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * @Description Token拦截器
+ * @Description Token拦截器 所有请求验证token进行授权
  * @Author huangW
  * @Date 2020/4/22
  * @Version V1.0
  */
 @Component
+@Slf4j
 public class TokenRequestFilter extends OncePerRequestFilter {
 
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
-    private String header = "Authorization";
+    private final String header = "Authorization";
+    private final String userNumberStart = "USE";
+
+
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -36,9 +41,8 @@ public class TokenRequestFilter extends OncePerRequestFilter {
                                     FilterChain chain) throws ServletException, IOException {
 
         String headerToken = request.getHeader(header);
-        if(StringUtils.isNotBlank(headerToken)){
+        if (StringUtils.isNotBlank(headerToken)) {
             String token = headerToken.replace("Bearer", "").trim();
-            System.out.println("token = " + token);
 
             //判断令牌是否过期，默认是一周
             //比较好的解决方案是：
@@ -51,16 +55,19 @@ public class TokenRequestFilter extends OncePerRequestFilter {
             try {
                 check = this.jwtTokenUtil.isTokenExpired(token);
             } catch (Exception e) {
-                new Throwable("令牌已过期，请重新登录。"+e.getMessage());
+                new Throwable("令牌已过期，请重新登录。" + e.getMessage());
             }
             if (!check) {
                 //通过令牌获取用户名称
                 String username = jwtTokenUtil.getUsernameFromToken(token);
-                System.out.println("username = " + username);
+                log.info("username -> " + username);
+                String userNumber = jwtTokenUtil.getUserNumberFromToken(token);
+                log.info("userNumber -> " + userNumber);
 
                 //判断用户不为空，且SecurityContextHolder授权信息还是空的
-                if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                    request.setAttribute("username","123");
+                if (StringUtils.isNotBlank(username) && StringUtils.isNotBlank(userNumber)
+                        && userNumber.startsWith(userNumberStart) && SecurityContextHolder.getContext().getAuthentication() == null) {
+                    request.setAttribute("username", username);
                     AuthUser user = new AuthUser();
                     user.setUsername(username);
                     UsernamePasswordAuthenticationToken authentication =
@@ -80,4 +87,5 @@ public class TokenRequestFilter extends OncePerRequestFilter {
         }
         chain.doFilter(request, response);
     }
+
 }

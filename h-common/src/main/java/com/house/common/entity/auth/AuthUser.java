@@ -14,24 +14,23 @@ import java.util.Collection;
  * @Version V1.0
  */
 @Component
-@Data
 public class AuthUser implements UserDetails {
 
     private String username;
 
     private String password;
 
-    private Integer state;
+    private String userNumber;
 
     private Collection<? extends GrantedAuthority> authorities;
 
     public AuthUser() {
     }
 
-    public AuthUser(String username, String password, Integer state, Collection<? extends GrantedAuthority> authorities) {
+    public AuthUser(String username, String password, String userNumber, Collection<? extends GrantedAuthority> authorities) {
         this.username = username;
         this.password = password;
-        this.state = state;
+        this.userNumber = userNumber;
         this.authorities = authorities;
     }
 
@@ -72,20 +71,24 @@ public class AuthUser implements UserDetails {
         return true;
     }
 
-    public Integer getState() {
-        return state;
+    public String getUserNumber() {
+        return userNumber;
     }
 
-    public void setState(Integer state) {
-        this.state = state;
+    public void setUserNumber(String userNumber) {
+        this.userNumber = userNumber;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override
     public String toString() {
-        return "JwtUser{" +
+        return "AuthUser{" +
                 "username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", state=" + state +
+                ", userNumber='" + userNumber + '\'' +
                 ", authorities=" + authorities +
                 '}';
     }
