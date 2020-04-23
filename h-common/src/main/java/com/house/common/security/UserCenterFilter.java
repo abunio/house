@@ -44,10 +44,8 @@ public class UserCenterFilter extends UsernamePasswordAuthenticationFilter {
                 setDetails(request, authRequest);
                 return this.getAuthenticationManager().authenticate(authRequest);
             }
-        }
-
-        //transmit it to UsernamePasswordAuthenticationFilter
-        else {
+        } else {
+            //transmit it to UsernamePasswordAuthenticationFilter
             return super.attemptAuthentication(request, response);
         }
     }

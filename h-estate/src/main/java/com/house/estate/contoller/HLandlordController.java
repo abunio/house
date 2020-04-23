@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
  * @Date 2020/3/17
  * @Version V1.0
  */
-@CrossOrigin
+
 @RestController
 @RequestMapping("/landlord")
 public class HLandlordController {
