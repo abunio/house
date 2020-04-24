@@ -1,5 +1,6 @@
 package com.house.sys.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.house.common.entity.sys.HUser;
 import com.house.common.utils.StringUtil;
 import com.house.common.utils.auth.PasswordEncoder;
@@ -59,5 +60,21 @@ public class HUserService {
             return true;
         return false;
 
+    }
+
+    /**
+     * 修改密码
+     * @param hUser
+     * @return
+     */
+    public Boolean changePassword(HUser hUser) {
+        HUser user = new HUser();
+        user.setPassword(passwordEncoder.encode(hUser.getPassword()));
+        QueryWrapper<HUser> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("username",hUser.getUsername());
+        int i = hUserMapper.update(user, queryWrapper);
+        if(i>0)
+            return true;
+        return false;
     }
 }

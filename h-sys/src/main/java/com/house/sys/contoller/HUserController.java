@@ -34,4 +34,17 @@ public class HUserController {
             return new ResponseResult(CommonCode.SUCCESS);
         return new ResponseResult(CommonCode.FAIL);
     }
+
+    /**
+     * 修改密码
+     * @param hUser
+     * @return
+     */
+    @PostMapping("/changePassword")
+    public ResponseResult changePassword(@RequestBody(required=false) HUser hUser){
+        Boolean flag = hUserService.changePassword(hUser);
+        if(flag)
+            return new ResponseResult(CommonCode.SUCCESS);
+        return new ResponseResult(CommonCode.FAIL);
+    }
 }
