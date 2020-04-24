@@ -18,7 +18,7 @@ import org.springframework.web.cors.CorsUtils;
 
 
 /**
- * @Description Security授权配置主文件
+ * @Description Security认证授权配置主文件
  * @Author huangW
  * @Date 2020/3/24
  * @Version V1.0
@@ -58,7 +58,7 @@ public class SecurityAdapter extends WebSecurityConfigurerAdapter {
                 .and().headers().cacheControl();
 
         http.antMatcher("/**").authorizeRequests()
-                .antMatchers("/", "/login").permitAll()
+                .antMatchers("/", "/login").permitAll()//登录放行
                 .antMatchers("/", "/register").permitAll()
                 .anyRequest().authenticated();
         //这里必须要写formLogin()，不然原有的UsernamePasswordAuthenticationFilter不会出现，也就无法配置我们重新的UsernamePasswordAuthenticationFilter
@@ -75,7 +75,7 @@ public class SecurityAdapter extends WebSecurityConfigurerAdapter {
         UserCenterFilter filter = new UserCenterFilter();
         filter.setAuthenticationSuccessHandler(successHandler);
         filter.setAuthenticationFailureHandler(failureHandler);
-        filter.setFilterProcessesUrl("/login");
+        filter.setFilterProcessesUrl("/login");//登录路径
 
         //这句很关键，重用WebSecurityConfigurerAdapter配置的AuthenticationManager，不然要自己组装AuthenticationManager
         filter.setAuthenticationManager(authenticationManagerBean());

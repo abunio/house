@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @Description
+ * @Description 登录后根据用户名数据库查相关信息
  * @Author huangW
  * @Date 2020/4/23
  * @Version V1.0
