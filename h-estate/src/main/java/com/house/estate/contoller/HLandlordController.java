@@ -6,8 +6,11 @@ import com.house.common.model.response.PageResult;
 import com.house.common.model.response.Result;
 import com.house.estate.mapper.HLandlordMapper;
 import com.house.estate.service.HLandlordService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @Description
@@ -18,11 +21,11 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/landlord")
+@Slf4j
 public class HLandlordController {
 
     @Autowired
     private HLandlordService hLandlordService;
-
 
     /**
      * 分页
@@ -40,7 +43,7 @@ public class HLandlordController {
      * @return
      */
     @PostMapping("/add")
-    public Result add(@RequestBody HLandlord hLandlord ){
+    public Result add(@RequestBody(required = false) HLandlord hLandlord ){
         String msg = hLandlordService.add(hLandlord);
         return new Result(true,msg);
     }
@@ -63,5 +66,11 @@ public class HLandlordController {
     @DeleteMapping("delete")
     public Result delete(@RequestParam("id") String id){
         return new Result(true,hLandlordService.delete(id));
+    }
+
+    public static void main(String[] args) {
+        AtomicInteger atomicInteger = new AtomicInteger();
+        System.out.println(atomicInteger.compareAndSet(0,2019)+"当前值："+atomicInteger.get());
+        System.out.println(atomicInteger.compareAndSet(5,2020)+"当前值："+atomicInteger.get());
     }
 }

@@ -2,6 +2,8 @@ package com.house.sys.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.house.common.entity.sys.HUser;
+import com.house.common.exception.ExceptionCast;
+import com.house.common.model.response.CommonCode;
 import com.house.common.utils.StringUtil;
 import com.house.common.utils.auth.PasswordEncoder;
 import com.house.common.utils.number.NumberUtils;
@@ -34,9 +36,8 @@ public class HUserService {
      * @param hUser
      * @return
      */
-    public Boolean register(HUser hUser) {
-        if(check(hUser.getUsername()))
-            throw new RuntimeException("用户名已注册!");
+    public void register(HUser hUser) {
+        check(hUser.getUsername());
         hUser.setId(StringUtil.uuid());
         hUser.setPassword(passwordEncoder.encode(hUser.getPassword()));
         hUser.setUserNumber(numberUtils.getNumber());
@@ -44,9 +45,7 @@ public class HUserService {
         hUser.setCreateTime(new Date());
         int i = hUserMapper.insertSelective(hUser);
         if(i<1)
-            return false;
-        return true;
-
+           ExceptionCast.cast(CommonCode.FAIL);
     }
 
     /**
@@ -54,12 +53,10 @@ public class HUserService {
      * @param username
      * @return
      */
-    private Boolean check(String username) {
+    private void check(String username) {
         Integer u = hUserMapper.selectCountByUserName(username);
         if(u>0)
-            return true;
-        return false;
-
+            ExceptionCast.cast(CommonCode.USER_EXISTS);
     }
 
     /**
@@ -67,14 +64,14 @@ public class HUserService {
      * @param hUser
      * @return
      */
-    public Boolean changePassword(HUser hUser) {
+    public void changePassword(HUser hUser) {
         HUser user = new HUser();
         user.setPassword(passwordEncoder.encode(hUser.getPassword()));
         QueryWrapper<HUser> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("username",hUser.getUsername());
         int i = hUserMapper.update(user, queryWrapper);
-        if(i>0)
-            return true;
-        return false;
+        if(i<1)
+            ExceptionCast.cast(CommonCode.FAIL);
+
     }
 }

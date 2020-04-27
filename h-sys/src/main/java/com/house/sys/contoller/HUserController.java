@@ -4,6 +4,7 @@ import com.house.common.entity.sys.HUser;
 import com.house.common.model.response.CommonCode;
 import com.house.common.model.response.ResponseResult;
 import com.house.sys.service.HUserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @Version V1.0
  */
 @RestController
+@Slf4j
 public class HUserController {
 
     @Autowired
@@ -28,11 +30,8 @@ public class HUserController {
      */
     @PostMapping("/register")
     public ResponseResult register(@RequestBody(required=false) HUser hUser){
-
-        Boolean flag = hUserService.register(hUser);
-        if(flag)
-            return new ResponseResult(CommonCode.SUCCESS);
-        return new ResponseResult(CommonCode.FAIL);
+        hUserService.register(hUser);
+        return new ResponseResult(CommonCode.SUCCESS);
     }
 
     /**
@@ -42,9 +41,7 @@ public class HUserController {
      */
     @PostMapping("/changePassword")
     public ResponseResult changePassword(@RequestBody(required=false) HUser hUser){
-        Boolean flag = hUserService.changePassword(hUser);
-        if(flag)
-            return new ResponseResult(CommonCode.SUCCESS);
-        return new ResponseResult(CommonCode.FAIL);
+        hUserService.changePassword(hUser);
+        return new ResponseResult(CommonCode.SUCCESS);
     }
 }
