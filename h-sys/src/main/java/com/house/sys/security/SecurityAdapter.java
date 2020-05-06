@@ -60,6 +60,7 @@ public class SecurityAdapter extends WebSecurityConfigurerAdapter {
         http.antMatcher("/**").authorizeRequests()
                 .antMatchers("/", "/login").permitAll()//登录放行
                 .antMatchers("/", "/register").permitAll()
+                .antMatchers("/", "/captcha*").permitAll()
                 .anyRequest().authenticated();
         //这里必须要写formLogin()，不然原有的UsernamePasswordAuthenticationFilter不会出现，也就无法配置我们重新的UsernamePasswordAuthenticationFilter
         //.and().formLogin().loginPage("/");

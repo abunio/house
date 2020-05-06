@@ -12,4 +12,6 @@ import lombok.Data;
 public class AuthenticationBean {
     private String username;
     private String password;
+    private String uuid;
+    private String captcha;
 }

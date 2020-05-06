@@ -72,6 +72,5 @@ public class HUserService {
         int i = hUserMapper.update(user, queryWrapper);
         if(i<1)
             ExceptionCast.cast(CommonCode.FAIL);
-
     }
 }

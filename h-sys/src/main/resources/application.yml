@@ -19,7 +19,7 @@ spring:
       minEvictableIdleTimeMillis: 300000  #连接在连接池的最小生存时间（毫秒）
   redis:
     database: 1
-    host: 192.168.2.106
+    host: 192.168.2.109
     port: 6379
     timeout: 3000
     jedis:
@@ -29,10 +29,6 @@ spring:
         max-active: 2000
         max-wait: 1000
     testOnBorrow: true
-  security:
-    user:
-      name: admin
-      password: admin
 
 eureka:
   client:
