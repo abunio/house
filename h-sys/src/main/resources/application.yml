@@ -5,7 +5,7 @@ spring:
     name: h-sys
   datasource:
     druid:
-      url: jdbc:mysql://192.168.2.109:3306/house?characterEncoding=utf-8
+      url: jdbc:mysql://192.168.2.109:3306/house?characterEncoding=utf-8&useSSL=false
       username: root
       password: 123456
       driverClassName: com.mysql.jdbc.Driver
@@ -29,6 +29,7 @@ spring:
         max-active: 2000
         max-wait: 1000
     testOnBorrow: true
+
 
 eureka:
   client:
