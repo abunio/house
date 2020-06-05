@@ -68,9 +68,4 @@ public class HLandlordController {
         return new Result(true,hLandlordService.delete(id));
     }
 
-    public static void main(String[] args) {
-        AtomicInteger atomicInteger = new AtomicInteger();
-        System.out.println(atomicInteger.compareAndSet(0,2019)+"当前值："+atomicInteger.get());
-        System.out.println(atomicInteger.compareAndSet(5,2020)+"当前值："+atomicInteger.get());
-    }
 }

@@ -15,30 +15,25 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import javax.annotation.Resource;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-/**
- * @author 张梓枫
- * @Description
- * @date: 2019年1月15日 上午11:47:29
- */
+
 @Service
 @Transactional(rollbackFor = Exception.class)
 @CacheConfig(cacheNames = "areaCache")
-public class AreaBlogic {
+public class AreaService {
 
-    @Autowired
+    @Resource
     private AreaMapper areaMapper;
 
     /**
-     * @author 张梓枫
-     * @Description:查询省市区级联
-     * @param @return
-     * @return List<AreaCascader>
-     * @throws Exception
+     * 查询省市区级联
+     *
+     * @return
      */
     @Cacheable(value = "areas")
     public List<AreaCascader> queryAreaCascader() {
@@ -48,10 +43,6 @@ public class AreaBlogic {
         }
         return this.getAreaTreeRespDtos(areas);
     }
-
-
-
-
 
     private List<AreaCascader> getAreaTreeRespDtos(List<AreaCascader> areas) {
         areas.forEach(p -> {

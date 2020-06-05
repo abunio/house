@@ -11,11 +11,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-/**
- * @author 张梓枫
- * @Description 区域级联选择器
- * @date:   2019年1月15日 上午11:38:59
- */
+
 @Data
 @ApiModel(description = "区域级联选择器")
 public class AreaCascader implements Serializable{

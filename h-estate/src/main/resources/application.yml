@@ -5,7 +5,7 @@ spring:
     name: h-estate
   datasource:
     druid:
-      url: jdbc:mysql://192.168.2.109:3306/house?characterEncoding=utf-8&useSSL=false
+      url: jdbc:mysql://47.114.3.235:3306/house?characterEncoding=utf-8&useSSL=false
       username: root
       password: 123456
       driverClassName: com.mysql.jdbc.Driver
@@ -19,8 +19,9 @@ spring:
       minEvictableIdleTimeMillis: 300000  #连接在连接池的最小生存时间（毫秒）
   redis:
     database: 1
-    host: 192.168.2.109
+    host: 47.114.3.235
     port: 6379
+    password: 123456
     timeout: 3000
     jedis:
       pool:
