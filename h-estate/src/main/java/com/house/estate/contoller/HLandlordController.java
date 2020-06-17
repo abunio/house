@@ -4,14 +4,11 @@ import com.house.common.entity.estate.HLandlord;
 import com.house.common.model.request.QueryPageBean;
 import com.house.common.model.response.PageResult;
 import com.house.common.model.response.Result;
-import com.house.estate.mapper.HLandlordMapper;
+
 import com.house.estate.service.HLandlordService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.concurrent.atomic.AtomicInteger;
-
 /**
  * @Description
  * @Author huangW
@@ -35,6 +32,11 @@ public class HLandlordController {
     @PostMapping("/list")
     public PageResult findPage(@RequestBody(required=false) QueryPageBean queryPageBean){
         return hLandlordService.findPage(queryPageBean);
+    }
+
+    @PostMapping("")
+    public Result findList(){
+        return new Result(true,"查询成功",hLandlordService.findList());
     }
 
     /**

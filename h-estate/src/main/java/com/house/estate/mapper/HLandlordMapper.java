@@ -7,6 +7,7 @@ import com.house.common.entity.estate.HLandlord;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
 import java.util.Map;
 
 
@@ -25,4 +26,6 @@ public interface HLandlordMapper extends BaseMapper<HLandlord> {
     int updateByPrimaryKey(HLandlord record);
 
     IPage<HLandlord> findHLandlordList(Page<HLandlord> page,@Param("map") Map map);
+
+    List<HLandlord> selectList();
 }

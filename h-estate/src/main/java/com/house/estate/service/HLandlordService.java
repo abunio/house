@@ -13,12 +13,16 @@ import com.house.common.model.request.QueryPageBean;
 import com.house.common.model.response.PageResult;
 import com.house.common.utils.StringUtil;
 import com.house.estate.mapper.HLandlordMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -29,6 +33,8 @@ import java.util.Map;
  * @Version V1.0
  */
 @Service
+@CacheConfig(cacheNames = "hLandlordCache")
+@Slf4j
 public class HLandlordService {
 
     @Autowired
@@ -42,11 +48,11 @@ public class HLandlordService {
      * @return
      */
     public PageResult findPage(QueryPageBean queryPageBean) {
-        Page<HLandlord> page = new Page<>(queryPageBean.getCurrentPage(),queryPageBean.getPageSize());
+        Page<HLandlord> page = new Page<>(queryPageBean.getCurrentPage(), queryPageBean.getPageSize());
         Map map = new HashMap();
-        map.put("value",queryPageBean.getQueryString());
-        map.put("status",queryPageBean.getStatus());
-        IPage<HLandlord> pageHLandlord = hLandlordMapper.findHLandlordList(page,map);
+        map.put("value", queryPageBean.getQueryString());
+        map.put("status", queryPageBean.getStatus());
+        IPage<HLandlord> pageHLandlord = hLandlordMapper.findHLandlordList(page, map);
         return new PageResult(pageHLandlord.getTotal(), pageHLandlord.getRecords());
 
 //        Page<HLandlord> page = new Page(queryPageBean.getCurrentPage(),queryPageBean.getPageSize());
@@ -94,10 +100,12 @@ public class HLandlordService {
      * @param id
      * @return
      */
+    @Cacheable(value = "hLandlord", key = "#id")
     public HLandlord findById(String id) {
         HLandlord hLandlord = hLandlordMapper.selectByPrimaryKey(id);
+        log.info("查询数据库。。。");
         if (hLandlord == null) {
-           throw new RuntimeException("HLandlord查询为空");
+            throw new RuntimeException("HLandlord查询为空");
         }
         return hLandlord;
     }
@@ -113,5 +121,11 @@ public class HLandlordService {
         if (i > 0)
             return "删除成功";
         return "请重试";
+    }
+
+    @Cacheable(value = "list")
+    public List<HLandlord> findList() {
+        log.info("查询数据库。。。");
+        return hLandlordMapper.selectList();
     }
 }
