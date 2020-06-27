@@ -41,8 +41,12 @@ spring:
     #  key-prefix: "demo:"
     #  time-to-live: 60000  #缓存超时时间 单位：ms
     #  cache-null-values: false #是否缓存空值
-
-
+  rabbitmq:
+    host: 47.114.3.235
+    port: 5673
+    username: guest
+    password: guest
+    dev-exchange: dev-exchange
 
 eureka:
   client:
