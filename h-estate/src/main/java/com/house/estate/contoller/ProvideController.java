@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @Description mq提供方
@@ -31,7 +33,9 @@ public class ProvideController {
     @GetMapping("/get")
     public String hello() {
         String context = "hello " + new Date();
-        this.rabbitTemplate.convertAndSend(exchange, MQConstant.routing, context);
+        Map<String,Object> map = new HashMap<>();
+        map.put("context",context);
+        this.rabbitTemplate.convertAndSend(exchange, MQConstant.routing, map);
         return context;
     }
 

@@ -82,7 +82,7 @@ public class SysJobController extends BaseController
      */
     @PostMapping("/changeStatus")
     @ResponseBody
-    public AjaxResult changeStatus(SysJob job)
+    public AjaxResult changeStatus(@RequestBody SysJob job)
     {
         job.setUpdateBy("");
         return toAjax(jobService.changeStatus(job));
@@ -138,7 +138,7 @@ public class SysJobController extends BaseController
         job.setUpdateBy("");
         return toAjax(jobService.updateJobCron(job));
     }
-    
+
     /**
      * 校验cron表达式是否有效
      */

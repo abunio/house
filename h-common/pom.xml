@@ -27,10 +27,10 @@
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>3.2.0</version>
         </dependency>
-        <!--<dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>-->
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -38,20 +38,7 @@
         <!--引入缓存-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-cache</artifactId>
-            <version>2.3.0.RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
-            <version>2.3.0.RELEASE</version>
-            <exclusions>
-                <!--排除lettuce客户端（默认使用lettuce客户端）-->
-                <exclusion>
-                    <artifactId>lettuce-core</artifactId>
-                    <groupId>io.lettuce</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
