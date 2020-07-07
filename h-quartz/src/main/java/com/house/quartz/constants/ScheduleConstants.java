@@ -7,6 +7,7 @@ package com.house.quartz.constants;
  * @Version 1.0
  */
 public interface ScheduleConstants {
+
     public static final String TASK_CLASS_NAME = "__TASK_CLASS_NAME__";
 
     public static final String TASK_PROPERTIES = "__TASK_PROPERTIES__";

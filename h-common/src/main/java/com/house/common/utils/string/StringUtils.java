@@ -1,4 +1,4 @@
-package com.house.quartz.util;
+package com.house.common.utils.string;
 
 import cn.hutool.core.text.StrFormatter;
 
@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * @Description 字符串工具类
  * @Author huangW
- * @Date 10:31 2020/6/18
+ * @Date 10:16 2020/7/7
  * @Version 1.0
  */
 public class StringUtils extends org.apache.commons.lang3.StringUtils
@@ -366,3 +366,4 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils
     }
 
 }
+

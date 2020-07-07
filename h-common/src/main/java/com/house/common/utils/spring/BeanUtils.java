@@ -1,4 +1,4 @@
-package com.house.quartz.util;
+package com.house.common.utils.spring;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 /**
  * @Description Bean 工具类
  * @Author huangW
- * @Date 10:38 2020/6/18
+ * @Date 10:17 2020/7/7
  * @Version 1.0
  */
 public class BeanUtils
