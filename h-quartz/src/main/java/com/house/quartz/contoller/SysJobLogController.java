@@ -1,16 +1,14 @@
 package com.house.quartz.contoller;
 
 
-import com.house.quartz.base.AjaxResult;
-import com.house.quartz.base.BaseController;
-import com.house.quartz.entity.SysJobLog;
+import com.house.common.base.controller.BaseController;
+import com.house.common.base.entity.AjaxResult;
 import com.house.quartz.service.ISysJobLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 /**
  * 调度日志操作处理
@@ -63,6 +61,6 @@ public class SysJobLogController extends BaseController {
     @ResponseBody
     public AjaxResult clean() {
         jobLogService.cleanJobLog();
-        return success();
+        return AjaxResult.success();
     }
 }

@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.Date;
 
 /**
@@ -25,7 +26,7 @@ import java.util.Date;
 @Service
 public class HUserService {
 
-    @Autowired
+    @Resource
     private HUserMapper hUserMapper;
 
     @Autowired
@@ -80,6 +81,11 @@ public class HUserService {
             ExceptionCast.cast(CommonCode.FAIL);
     }
 
+    /**
+     * 手机号登陆
+     * @param phone
+     * @return
+     */
     public String login(String phone) {
         QueryWrapper<HUser> queryWrapper = new QueryWrapper();
         queryWrapper.eq("mobile",phone);

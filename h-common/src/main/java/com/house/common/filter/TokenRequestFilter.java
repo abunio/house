@@ -39,8 +39,8 @@ public class TokenRequestFilter extends OncePerRequestFilter {
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
-//    @Autowired
-//    private RedisUtil redisUtil;
+    @Autowired
+    private RedisUtil redisUtil;
 
     private final String header = "Authorization";
     private final String userNumberStart = "USE";
@@ -50,27 +50,27 @@ public class TokenRequestFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain chain) throws ServletException, IOException {
-//        //验证码
-//        if ("POST".equals(request.getMethod()) && "/login".equals(request.getServletPath())) {
-//            //登录请求
-//            String captcha = request.getParameter("code");
-//            String key = "CAPTCHA_" + captcha;
-//            Object code = redisUtil.get(key);
-//            if (code != null || String.valueOf(code).equalsIgnoreCase(captcha)) {
-//
-//            }else {
-//                response.setContentType("application/json;charset=UTF-8");
-//                response.setHeader("Access-Control-Allow-Origin", "*");
-//                response.setHeader("Access-Control-Allow-Method", "POST,GET");
-//                //输出JSON
-//                PrintWriter out = response.getWriter();
-//                ResponseResult data = new ResponseResult(CommonCode.CODE_ERROR);
-//                out.write(new ObjectMapper().writeValueAsString(data));
-//                out.flush();
-//                out.close();
-//                return;
-//            }
-//        }
+        //验证码
+        if ("POST".equals(request.getMethod()) && "/login".equals(request.getServletPath())) {
+            //登录请求
+            String captcha = request.getParameter("code");
+            String key = "CAPTCHA_" + captcha;
+            Object code = redisUtil.get(key);
+            if (code != null || String.valueOf(code).equalsIgnoreCase(captcha)) {
+
+            }else {
+                response.setContentType("application/json;charset=UTF-8");
+                response.setHeader("Access-Control-Allow-Origin", "*");
+                response.setHeader("Access-Control-Allow-Method", "POST,GET");
+                //输出JSON
+                PrintWriter out = response.getWriter();
+                ResponseResult data = new ResponseResult(CommonCode.CODE_ERROR);
+                out.write(new ObjectMapper().writeValueAsString(data));
+                out.flush();
+                out.close();
+                return;
+            }
+        }
 
         //检验token
         String headerToken = request.getHeader(header);

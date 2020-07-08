@@ -24,7 +24,7 @@ public class ScheduleConfig {
         executor.setMaxPoolSize(10);
         executor.setQueueCapacity(20);
         executor.setKeepAliveSeconds(30);
-        executor.setThreadNamePrefix("WS-Job-Thread");
+        executor.setThreadNamePrefix("house-Job-Thread");
         executor.setWaitForTasksToCompleteOnShutdown(true);
         executor.setAwaitTerminationSeconds(60);
         executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
@@ -59,7 +59,7 @@ public class ScheduleConfig {
         prop.put("org.quartz.jobStore.tablePrefix", "QRTZ_");
         factory.setQuartzProperties(prop);
 
-        factory.setSchedulerName("WS_Scheduler");
+        factory.setSchedulerName("House_Scheduler");
         // 延时启动
         factory.setStartupDelay(1);
         factory.setApplicationContextSchedulerContextKey("applicationContextKey");

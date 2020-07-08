@@ -43,16 +43,6 @@ public class HUserController {
         return new ResponseResult(CommonCode.SUCCESS);
     }
 
-    /**
-     * 手机登录
-     * @param phone
-     * @return
-     */
-    @PostMapping("/phoneLogin")
-    public ResponseResult login(@RequestParam String phone){
-        String token = hUserService.login(phone);
-        return new ResponseResult(CommonCode.LOGIN,token);
-    }
 
     @GetMapping("/get")
     public ResponseResult get(){

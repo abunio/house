@@ -1,12 +1,15 @@
 package com.house.sys.contoller;
 
-import com.house.common.exception.CustomException;
 import com.house.common.exception.ExceptionCast;
 import com.house.common.model.response.CommonCode;
+import com.house.common.model.response.ResponseResult;
 import com.house.sys.service.CaptchaService;
+import com.house.sys.service.HUserService;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.imageio.ImageIO;
@@ -27,6 +30,9 @@ public class LoginController {
     @Autowired
     private CaptchaService captchaService;
 
+    @Autowired
+    private HUserService hUserService;
+
     @GetMapping("captcha.jpg")
     public void captcha(HttpServletResponse response, String uuid) {
         response.setHeader("Cache-Control", "no-store, no-cache");
@@ -43,5 +49,16 @@ public class LoginController {
         } catch (IOException e){
             ExceptionCast.cast(CommonCode.CODE_FAIL);
         }
+    }
+
+    /**
+     * 手机登录
+     * @param phone
+     * @return
+     */
+    @PostMapping("/phoneLogin")
+    public ResponseResult login(@RequestParam String phone){
+        String token = hUserService.login(phone);
+        return new ResponseResult(CommonCode.LOGIN,token);
     }
 }

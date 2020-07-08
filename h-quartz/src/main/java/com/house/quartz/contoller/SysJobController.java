@@ -1,7 +1,7 @@
 package com.house.quartz.contoller;
 
-import com.house.quartz.base.AjaxResult;
-import com.house.quartz.base.BaseController;
+import com.house.common.base.controller.BaseController;
+import com.house.common.base.entity.AjaxResult;
 import com.house.quartz.entity.SysJob;
 import com.house.quartz.service.ISysJobService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
-import static com.house.quartz.base.AjaxResult.error;
-import static com.house.quartz.base.AjaxResult.success;
 
 /**
  * 调度任务信息操作处理
@@ -60,12 +56,12 @@ public class SysJobController extends BaseController
         try
         {
             jobService.deleteJobByIds(ids);
-            return success();
+            return AjaxResult.success();
         }
         catch (Exception e)
         {
             e.printStackTrace();
-            return error(e.getMessage());
+            return AjaxResult.error(e.getMessage());
         }
     }
 
