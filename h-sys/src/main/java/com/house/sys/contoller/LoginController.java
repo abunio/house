@@ -1,16 +1,19 @@
 package com.house.sys.contoller;
 
+import com.house.common.base.entity.AjaxResult;
 import com.house.common.exception.ExceptionCast;
 import com.house.common.model.response.CommonCode;
 import com.house.common.model.response.ResponseResult;
 import com.house.sys.service.CaptchaService;
 import com.house.sys.service.HUserService;
+import com.house.sys.service.IQinNiuCloudStorageService;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
@@ -32,6 +35,9 @@ public class LoginController {
 
     @Autowired
     private HUserService hUserService;
+
+    @Autowired
+    private IQinNiuCloudStorageService iQinNiuCloudStorageService;
 
     @GetMapping("captcha.jpg")
     public void captcha(HttpServletResponse response, String uuid) {
@@ -60,5 +66,10 @@ public class LoginController {
     public ResponseResult login(@RequestParam String phone){
         String token = hUserService.login(phone);
         return new ResponseResult(CommonCode.LOGIN,token);
+    }
+
+    @PostMapping("upload")
+    public AjaxResult upload(MultipartFile file) throws Exception {
+        return AjaxResult.success("操作成功",iQinNiuCloudStorageService.upload(file.getBytes(), file.getOriginalFilename()));
     }
 }

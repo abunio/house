@@ -84,3 +84,10 @@ mybatis-plus:
     # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
+qiniu:
+  accessKey: L1PCLzvqhe2PbGSWW7SAF6EMNnClDCWovh3SDTxn
+  secretKey: jflX5qbl927y5kAnfzGUaLJKydMasg_Fb36_2oPk
+  bucket: wessyun
+  httpBase: http://qcpx3p33f.bkt.clouddn.com/
+  pathPicture: dev/picture/
+  pathVideo: dev/video/
