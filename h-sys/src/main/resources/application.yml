@@ -88,6 +88,6 @@ qiniu:
   accessKey: L1PCLzvqhe2PbGSWW7SAF6EMNnClDCWovh3SDTxn
   secretKey: jflX5qbl927y5kAnfzGUaLJKydMasg_Fb36_2oPk
   bucket: wessyun
-  httpBase: http://qcpx3p33f.bkt.clouddn.com/
+  httpBase: http://qiniu.wessyun.com/
   pathPicture: dev/picture/
   pathVideo: dev/video/
